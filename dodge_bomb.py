@@ -36,6 +36,17 @@ def main():
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    kk_imgf = pg.transform.flip(kk_img, True, False)
+    roto = {
+        (0,-5):pg.transform.rotozoom(kk_imgf,90,1.0),
+        (+5,-5):pg.transform.rotozoom(kk_imgf,45,1.0),
+        (+5,0):pg.transform.rotozoom(kk_imgf, 0, 1.0),
+        (+5,+5):pg.transform.rotozoom(kk_imgf, -45, 1.0),
+        (0,+5):pg.transform.rotozoom(kk_imgf, -90, 1.0),
+        (-5,+5):pg.transform.rotozoom(kk_img, 45, 1.0),
+        (-5,0):pg.transform.rotozoom(kk_img, 0, 1.0),
+        (-5,-5):pg.transform.rotozoom(kk_img, -45, 1.0)
+    }
     kk_rct = kk_img.get_rect()  # こうかとんSurfaceのrect
     kk_rct.center = 900, 400        
     bb_img = pg.Surface((20,20))  # 練習1：透明のSurfaceを作る
@@ -75,6 +86,9 @@ def main():
         kk_rct.move_ip(sum_mv[0], sum_mv[1])
         if check_bound(kk_rct) != (True, True):
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
+        x,y = sum_mv[0], sum_mv[1]
+        if event.type == pg.KEYDOWN:
+            kk_img = roto[(x,y)]
         screen.blit(kk_img, kk_rct)
         avx, avy = vx*accs[min(tmr//500, 9)], vy*accs[min(tmr//500, 9)]
         bb_rct.move_ip(avx, avy)  # 練習2 爆弾の移動

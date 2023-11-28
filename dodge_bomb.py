@@ -16,7 +16,7 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
     引数 rct:　こうかとんor爆弾SurfaceのRect
     戻り値:横方向、縦方向判定結果 (画面内：True/画面外：False)
     """
-    yoko, tate = True, False
+    yoko, tate = True, True
     if rct.left < 0 or WIDTH < rct.right:  # 横方向
         yoko = False
     if rct.top < 0 or HEIGHT < rct.bottom:  # 縦方向
@@ -33,7 +33,7 @@ def main():
     kk_img = pg.image.load("ex02/fig/3.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
     kk_rct = kk_img.get_rect()  # こうかとんSurfaceのrect
-    kk_rct.center = 900,400
+    kk_rct.center = 900, 400
     enn = pg.Surface((20,20))  # 練習1：透明のSurfaceを作る
     enn.set_colorkey((0, 0, 0))  # 黒い部分の透明化
     pg.draw.circle(enn, (255,0,0), (10,10), 10)  # 半径10の赤い円
@@ -41,12 +41,17 @@ def main():
     bb_rct.centerx = random.randint(0, WIDTH)
     bb_rct.centery = random.randint(0, HEIGHT) 
     vx ,vy = +5, +5  # 爆弾の速度
+    
     clock = pg.time.Clock()
     tmr = 0
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
+        
+        if kk_rct.colliderect(bb_rct):
+            print("Game Over")
+            return
             
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]
@@ -54,6 +59,7 @@ def main():
             if key_lst[k]: 
                 sum_mv[0] += tpl[0]  # 押されたキーに応じて計算
                 sum_mv[1] += tpl[1]
+        
         
         screen.blit(bg_img, [0, 0])
         kk_rct.move_ip(sum_mv[0], sum_mv[1])

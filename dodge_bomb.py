@@ -12,7 +12,7 @@ delta = {
     pg.K_RIGHT:(+5, 0)
     }  # 移動量の辞書
 
-accs = [a for a in range(1, 11)]
+accs = [a for a in range(1, 11)]  # 加速度のリスト
 
 
 def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
@@ -45,7 +45,7 @@ def main():
         (-5,+5):pg.transform.rotozoom(kk_img, 45, 1.0),
         (-5,0):pg.transform.rotozoom(kk_img, 0, 1.0),
         (-5,-5):pg.transform.rotozoom(kk_img, -45, 1.0)
-    }
+    }  # 押下キーに対応するSurfaceの辞書
     kk_rct = kk_img.get_rect()  # こうかとんSurfaceのrect
     kk_rct.center = 900, 400        
     bb_img = pg.Surface((20, 20))  # 練習1：透明のSurfaceを作る
@@ -66,8 +66,8 @@ def main():
         if kk_rct.colliderect(bb_rct):
             kk_img = pg.image.load("ex02/fig/8.png")
             kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)  # 切り替え画像の用意
-            screen.blit(bg_img,[0, 0])
-            screen.blit(kk_img,kk_rct)
+            screen.blit(bg_img,[0, 0])  # 背景の再描画
+            screen.blit(kk_img,kk_rct)  # 切り替え後の画像をblit
             pg.display.update()
             clock.tick(1)
             print("Game Over")
@@ -86,7 +86,7 @@ def main():
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
         x,y = sum_mv[0], sum_mv[1]
         if event.type == pg.KEYDOWN:
-            kk_img = roto[(x,y)]
+            kk_img = roto[(x, y)]  # 押下キーに応じた画像を参照しkk_imgに代入
         screen.blit(kk_img, kk_rct)
         avx, avy = vx*accs[min(tmr//500, 9)], vy*accs[min(tmr//500, 9)]
         bb_rct.move_ip(avx, avy)  # 練習2 爆弾の移動
@@ -95,7 +95,7 @@ def main():
             vx *= -1
         if not tate:
             vy *= -1
-        avx, avy = vx*accs[min(tmr//500, 9)], vy*accs[min(tmr//500, 9)]
+        avx, avy = vx*accs[min(tmr//500, 9)], vy*accs[min(tmr//500, 9)]  # 値の更新
         bb_rct.move_ip(avx, avy)
         screen.blit(bb_img, bb_rct)
         pg.display.update()

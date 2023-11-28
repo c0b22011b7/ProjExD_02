@@ -29,7 +29,6 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
     return yoko, tate
         
 
-
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -51,7 +50,7 @@ def main():
     kk_rct.center = 900, 400        
     bb_img = pg.Surface((20,20))  # 練習1：透明のSurfaceを作る
     bb_img.set_colorkey((0, 0, 0))  # 黒い部分の透明化
-    pg.draw.circle(bb_img, (255,0,0), (10,10), 10)  # 半径10の赤い円
+    pg.draw.circle(bb_img, (255,0,0),(10, 10),10)  # 半径10の赤い円
     bb_rct = bb_img.get_rect()  # 練習2：rectの抽出
     bb_rct.centerx = random.randint(0, WIDTH)
     bb_rct.centery = random.randint(0, HEIGHT) 
@@ -80,7 +79,6 @@ def main():
             if key_lst[k]: 
                 sum_mv[0] += tpl[0]  # 押されたキーに応じて計算
                 sum_mv[1] += tpl[1]
-        
         
         screen.blit(bg_img, [0, 0])
         kk_rct.move_ip(sum_mv[0], sum_mv[1])

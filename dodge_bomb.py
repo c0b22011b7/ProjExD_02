@@ -4,10 +4,13 @@ import pygame as pg
 
 
 WIDTH, HEIGHT = 1600, 900
-delta = {pg.K_UP:(0, -5),
-         pg.K_DOWN:(0,+5),
-         pg.K_LEFT:(-5, 0),
-         pg.K_RIGHT:(+5, 0)}  # 移動量の辞書
+
+delta = {
+    pg.K_UP:(0, -5),
+    pg.K_DOWN:(0,+5),
+    pg.K_LEFT:(-5, 0),
+    pg.K_RIGHT:(+5, 0)
+    }  # 移動量の辞書
 
 
 def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
@@ -23,7 +26,6 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
         tate = False
     return yoko, tate
         
-
 
 
 def main():
@@ -50,6 +52,12 @@ def main():
                 return
         
         if kk_rct.colliderect(bb_rct):
+            kk_img = pg.image.load("ex02/fig/8.png")
+            kk_img = pg.transform.rotozoom(kk_img,0,2.0)  # 切り替え画像の用意
+            screen.blit(bg_img,[0, 0])
+            screen.blit(kk_img,kk_rct)
+            pg.display.update()
+            clock.tick(1)
             print("Game Over")
             return
             
